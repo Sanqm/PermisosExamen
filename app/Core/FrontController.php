@@ -188,8 +188,21 @@ class FrontController {
                     $controlador->mostrarTodos();
                 }
                 , 'get');
-
-
+        /*creamos ruta para agregar usuarios*/        
+        Route::add('/usuarios-sistema/add',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->mostrarAdd();
+                }
+                , 'get');        /*esta para llevarnos al formulario */
+         Route::add('/usuarios-sistema/add',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->procesarAdd();
+                }
+                , 'post');             /*esta para guardar los datos del formulario*/
+                
+                
         Route::pathNotFound(
             function () {
                 $controller = new \Com\Daw2\Controllers\ErroresController();
