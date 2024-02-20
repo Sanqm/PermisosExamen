@@ -55,7 +55,7 @@
                                 if (count($idiomas) > 0) {
                                     foreach ($idiomas as $idioma) {
                                         ?>
-                                        <option value="<?php echo $idioma['id_idioma']?>"><?php echo $idioma['nombre_idioma']?></option>
+                                        <option value="<?php echo $idioma['id_idioma']?>"<?php echo (isset($input['idioma']) && $input['idioma']==$idioma['id_idioma']) ? 'selected' : '';?>><?php echo $idioma['nombre_idioma']?></option>
                                             <?php
                                             }
                                             }

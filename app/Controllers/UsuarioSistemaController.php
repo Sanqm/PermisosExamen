@@ -29,6 +29,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
         $data['roles'] = $model->getAll();
         $modelIdioma = new \Com\Daw2\Models\AuxIdiomaModel();
         $data['idiomas'] = $modelIdioma->getAll();
+
         $this->view->showViews(array('templates/header.view.php', 'edit.usuario_sistema.view.php', 'templates/footer.view.php'), $data);
     }
 
@@ -45,6 +46,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             $modelIdioma = new \Com\Daw2\Models\AuxIdiomaModel();
             $data['idiomas'] = $modelIdioma->getAll();
             $data['errores'] = $errores;
+            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+
             $this->view->showViews(array('templates/header.view.php', 'edit.usuario_sistema.view.php', 'templates/footer.view.php'), $data);
         } else {
             $model = new \Com\Daw2\Models\UsuarioSistemaModel();
@@ -60,9 +63,9 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
                 $modelIdioma = new \Com\Daw2\Models\AuxIdiomaModel();
                 $data['idiomas'] = $modelIdioma->getAll();
                 $data['errores'] = "No se ha podido insertar usuario";
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
                 $this->view->showViews(array('templates/header.view.php', 'edit.usuario_sistema.view.php', 'templates/footer.view.php'), $data);
             }
-            
         }
     }
 
@@ -97,7 +100,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             $errores['id_rol'] = "El rol no puedo estar vacio";
         } else {
             $modelRol = new \Com\Daw2\Models\AuxRolModel();
-            if (is_null($modelRol->loadRol( (int) $datos['id_rol'])) || !filter_var( (int) $datos['id_rol'], FILTER_VALIDATE_INT)) {
+            if (is_null($modelRol->loadRol((int) $datos['id_rol'])) || !filter_var((int) $datos['id_rol'], FILTER_VALIDATE_INT)) {
                 $errores['id_rol'] = "El rol introducido no es válido";
             }
         }
@@ -106,12 +109,11 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             $errores['idioma'] = "El campo idioma es obligatorio";
         } else {
             $modelIdiomas = new \Com\Daw2\Models\AuxIdiomaModel();
-            if (is_null($modelIdiomas->getIdioma( (int) $datos['idioma']))|| !filter_var((int) $datos['idioma'], FILTER_VALIDATE_INT)) {
+            if (is_null($modelIdiomas->getIdioma((int) $datos['idioma'])) || !filter_var((int) $datos['idioma'], FILTER_VALIDATE_INT)) {
                 $errores['idioma'] = "El idioma introducido no es válido";
             }
         }
-        
+
         return $errores;
     }
-
 }
